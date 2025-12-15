@@ -1,0 +1,244 @@
+{
+    "appTitle": "Fox Gallery",
+    "description": "A curated collection of fox images inspired by randomfox.ca",
+    "foxes": [
+      {
+        "id": 1,
+        "image": "https://randomfox.ca/images/1.jpg",
+        "link": "https://randomfox.ca/?i=1",
+        "liked": true
+      },
+      {
+        "id": 2,
+        "image": "https://randomfox.ca/images/2.jpg",
+        "link": "https://randomfox.ca/?i=2",
+        "liked": false
+      },
+      {
+        "id": 3,
+        "image": "https://randomfox.ca/images/3.jpg",
+        "link": "https://randomfox.ca/?i=3",
+        "liked": true
+      },
+      {
+        "id": 4,
+        "image": "https://randomfox.ca/images/4.jpg",
+        "link": "https://randomfox.ca/?i=4",
+        "liked": false
+      },
+      {
+        "id": 5,
+        "image": "https://randomfox.ca/images/5.jpg",
+        "link": "https://randomfox.ca/?i=5",
+        "liked": false
+      },
+      {
+        "id": 6,
+        "image": "https://randomfox.ca/images/6.jpg",
+        "link": "https://randomfox.ca/?i=6",
+        "liked": false
+      },
+      {
+        "id": 7,
+        "image": "https://randomfox.ca/images/7.jpg",
+        "link": "https://randomfox.ca/?i=7",
+        "liked": false
+      },
+      {
+        "id": 8,
+        "image": "https://randomfox.ca/images/8.jpg",
+        "link": "https://randomfox.ca/?i=8",
+        "liked": false
+      },
+      {
+        "id": 9,
+        "image": "https://randomfox.ca/images/9.jpg",
+        "link": "https://randomfox.ca/?i=9",
+        "liked": false
+      },
+  
+      {
+        "id": 10,
+        "image": "https://randomfox.ca/images/10.jpg",
+        "link": "https://randomfox.ca/?i=10",
+        "liked": false
+      },
+      {
+        "id": 11,
+        "image": "https://randomfox.ca/images/11.jpg",
+        "link": "https://randomfox.ca/?i=11",
+        "liked": false
+      },
+      {
+        "id": 12,
+        "image": "https://randomfox.ca/images/12.jpg",
+        "link": "https://randomfox.ca/?i=12",
+        "liked": false
+      },
+      {
+        "id": 13,
+        "image": "https://randomfox.ca/images/13.jpg",
+        "link": "https://randomfox.ca/?i=13",
+        "liked": false
+      },
+      {
+        "id": 14,
+        "image": "https://randomfox.ca/images/14.jpg",
+        "link": "https://randomfox.ca/?i=14",
+        "liked": false
+      },
+      {
+        "id": 15,
+        "image": "https://randomfox.ca/images/15.jpg",
+        "link": "https://randomfox.ca/?i=15",
+        "liked": false
+      },
+      {
+        "id": 16,
+        "image": "https://randomfox.ca/images/16.jpg",
+        "link": "https://randomfox.ca/?i=16",
+        "liked": false
+      },
+      {
+        "id": 17,
+        "image": "https://randomfox.ca/images/17.jpg",
+        "link": "https://randomfox.ca/?i=17",
+        "liked": false
+      },
+      {
+        "id": 18,
+        "image": "https://randomfox.ca/images/18.jpg",
+        "link": "https://randomfox.ca/?i=18",
+        "liked": false
+      },
+      {
+        "id": 19,
+        "image": "https://randomfox.ca/images/19.jpg",
+        "link": "https://randomfox.ca/?i=19",
+        "liked": false
+      },
+  
+      {
+        "id": 20,
+        "image": "https://randomfox.ca/images/20.jpg",
+        "link": "https://randomfox.ca/?i=20",
+        "liked": false
+      },
+      {
+        "id": 21,
+        "image": "https://randomfox.ca/images/21.jpg",
+        "link": "https://randomfox.ca/?i=21",
+        "liked": false
+      },
+      {
+        "id": 22,
+        "image": "https://randomfox.ca/images/22.jpg",
+        "link": "https://randomfox.ca/?i=22",
+        "liked": false
+      },
+      {
+        "id": 23,
+        "image": "https://randomfox.ca/images/23.jpg",
+        "link": "https://randomfox.ca/?i=23",
+        "liked": false
+      },
+      {
+        "id": 24,
+        "image": "https://randomfox.ca/images/24.jpg",
+        "link": "https://randomfox.ca/?i=24",
+        "liked": false
+      },
+      {
+        "id": 25,
+        "image": "https://randomfox.ca/images/25.jpg",
+        "link": "https://randomfox.ca/?i=25",
+        "liked": false
+      },
+      {
+        "id": 26,
+        "image": "https://randomfox.ca/images/26.jpg",
+        "link": "https://randomfox.ca/?i=26",
+        "liked": false
+      },
+      {
+        "id": 27,
+        "image": "https://randomfox.ca/images/27.jpg",
+        "link": "https://randomfox.ca/?i=27",
+        "liked": false
+      },
+      {
+        "id": 28,
+        "image": "https://randomfox.ca/images/28.jpg",
+        "link": "https://randomfox.ca/?i=28",
+        "liked": false
+      },
+      {
+        "id": 29,
+        "image": "https://randomfox.ca/images/29.jpg",
+        "link": "https://randomfox.ca/?i=29",
+        "liked": false
+      },
+  
+      {
+        "id": 30,
+        "image": "https://randomfox.ca/images/30.jpg",
+        "link": "https://randomfox.ca/?i=30",
+        "liked": false
+      },
+      {
+        "id": 31,
+        "image": "https://randomfox.ca/images/31.jpg",
+        "link": "https://randomfox.ca/?i=31",
+        "liked": false
+      },
+      {
+        "id": 32,
+        "image": "https://randomfox.ca/images/32.jpg",
+        "link": "https://randomfox.ca/?i=32",
+        "liked": false
+      },
+      {
+        "id": 33,
+        "image": "https://randomfox.ca/images/33.jpg",
+        "link": "https://randomfox.ca/?i=33",
+        "liked": false
+      },
+      {
+        "id": 34,
+        "image": "https://randomfox.ca/images/34.jpg",
+        "link": "https://randomfox.ca/?i=34",
+        "liked": false
+      },
+      {
+        "id": 35,
+        "image": "https://randomfox.ca/images/35.jpg",
+        "link": "https://randomfox.ca/?i=35",
+        "liked": false
+      },
+      {
+        "id": 36,
+        "image": "https://randomfox.ca/images/36.jpg",
+        "link": "https://randomfox.ca/?i=36",
+        "liked": false
+      },
+      {
+        "id": 37,
+        "image": "https://randomfox.ca/images/37.jpg",
+        "link": "https://randomfox.ca/?i=37",
+        "liked": false
+      },
+      {
+        "id": 38,
+        "image": "https://randomfox.ca/images/38.jpg",
+        "link": "https://randomfox.ca/?i=38",
+        "liked": false
+      },
+      {
+        "id": 39,
+        "image": "https://randomfox.ca/images/39.jpg",
+        "link": "https://randomfox.ca/?i=39",
+        "liked": false
+      }
+    ]
+  }
+ 

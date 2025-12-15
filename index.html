@@ -4,87 +4,208 @@
 <head>
   <base href="/">
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <meta name="Description" content="Demonstration for fox-api">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="Description" content="Fox social media desktop feed">
+
+  <title>FoxGram</title>
 
   <style>
     :root, html, body {
-      margin: var(--ddd-spacing-0);
-      padding: var(--ddd-spacing-0);
+      margin: 0;
+      padding: 0;
+      background-color: #fafafa;
+      font-family: var(--ddd-font-navigation);
     }
-    #demo {
-      margin: var(--ddd-spacing-2);
+
+    /* ---------- Top Bar ---------- */
+    .top-bar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: white;
+      border-bottom: 1px solid #dbdbdb;
+      padding: 12px 0;
     }
+
+    .top-bar-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 16px;
+    }
+
+    .logo {
+      font-size: 1.4rem;
+      font-weight: 700;
+    }
+
+    .top-actions span {
+      font-size: 1.4rem;
+      margin-left: 16px;
+      cursor: pointer;
+    }
+
+    /* ---------- Main Layout ---------- */
+    .layout {
+      max-width: 1100px;
+      margin: 24px auto;
+      display: grid;
+      grid-template-columns: 2.2fr 1fr;
+      gap: 32px;
+      padding: 0 16px;
+    }
+
+    /* ---------- Feed ---------- */
+    .feed {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
     fox-api {
-      margin: var(--ddd-spacing-2);
-      border: var(--ddd-border-md);
-      border-radius: var(--ddd-radius-lg);
+      display: block;
+      border: none;
+      margin: 0;
     }
-    fox-api:hover {
-      box-shadow: var(--ddd-boxShadow-sm);
+
+    /* ---------- Sidebar ---------- */
+    .sidebar {
+      position: sticky;
+      top: 88px;
+      height: fit-content;
     }
-    #example {
-      --fox-api-font-size: var(--ddd-font-size-l);
-      background-color: var(--ddd-accent-2);
-      color: var(--ddd-primary-17);
+
+    .profile {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .profile-pic {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: #ddd;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+    }
+
+    .profile-info strong {
+      display: block;
+      font-size: 0.95rem;
+    }
+
+    .profile-info span {
+      font-size: 0.8rem;
+      color: #888;
+    }
+
+    .suggestions h4 {
+      font-size: 0.9rem;
+      color: #888;
+      margin-bottom: 12px;
+    }
+
+    .suggestion {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      margin-bottom: 10px;
+    }
+
+    .suggestion span {
+      color: #0095f6;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    /* ---------- Footer ---------- */
+    .footer {
+      font-size: 0.75rem;
+      color: #aaa;
+      margin-top: 32px;
+      line-height: 1.4;
+    }
+
+    /* ---------- Responsive ---------- */
+    @media (max-width: 900px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        display: none;
+      }
     }
   </style>
-  <title>fox-api</title>
 </head>
 
 <body>
-  <div id="demo">
-    <h1>Fox Gallery API Demo</h1>
-    <p>A responsive gallery showcasing random fox images from <a href="https://randomfox.ca/" target="_blank">randomfox.ca</a></p>
-    
-    <!-- Default gallery with 9 initial images -->
-    <fox-api></fox-api>
+
+  <!-- Top navigation -->
+  <div class="top-bar">
+    <div class="top-bar-inner">
+      <div class="logo">🦊 FoxGram</div>
+      <div class="top-actions">
+        <span>🏠</span>
+        <span>💬</span>
+        <span>➕</span>
+        <span>❤️</span>
+        <span>👤</span>
+      </div>
+    </div>
   </div>
+
+  <!-- Main content -->
+  <div class="layout">
+
+    <!-- Feed -->
+    <div class="feed">
+      <fox-api></fox-api>
+    </div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="profile">
+        <div class="profile-pic">🦊</div>
+        <div class="profile-info">
+          <strong>fox_lover</strong>
+          <span>Fox Enthusiast</span>
+        </div>
+      </div>
+
+      <div class="suggestions">
+        <h4>Suggestions for you</h4>
+
+        <div class="suggestion">
+          <div>@wildfoxes</div>
+          <span>Follow</span>
+        </div>
+        <div class="suggestion">
+          <div>@urbanfox</div>
+          <span>Follow</span>
+        </div>
+        <div class="suggestion">
+          <div>@fox_daily</div>
+          <span>Follow</span>
+        </div>
+      </div>
+
+      <div class="footer">
+        About · Help · API · Privacy · Terms<br>
+        © 2025 FoxGram
+      </div>
+    </aside>
+
+  </div>
+
+  <!-- Component -->
   <script type="module" src="./fox-api.js"></script>
 
-  <!-- Take HAX, the Web and you further down the rabbit hole -->
-  <style>
-    #follow-the-white-rabbit {
-      margin: var(--ddd-spacing-4) auto var(--ddd-spacing-16)  var(--ddd-spacing-4);
-      background-color: var(--ddd-accent-4);
-      color: var(--ddd-theme-default-coalyGray);
-    }
-    #follow-the-white-rabbit[open] summary {
-      background-color: var(--ddd-accent-4) !important;
-      color: var(--ddd-theme-default-coalyGray);
-    }
-    #follow-the-white-rabbit[open] .content {
-      padding: var(--ddd-spacing-0) var(--ddd-spacing-4);
-    }
-    #follow-the-white-rabbit ul,
-    #follow-the-white-rabbit li {
-      padding: var(--ddd-spacing-0);
-      margin: var(--ddd-spacing-0);
-    }
-    #follow-the-white-rabbit li {
-      font-size: var(--ddd-font-size-xs);
-      list-style: none;
-    }
-    #follow-the-white-rabbit li strong,
-    #follow-the-white-rabbit li a {
-      padding: var(--ddd-spacing-2) var(--ddd-spacing-4);
-      color: var(--ddd-theme-default-coalyGray);
-      display: block;
-      font-weight: var(--ddd-font-weight-bold);
-    }
-    #follow-the-white-rabbit li:focus-within a,
-    #follow-the-white-rabbit li:hover a {
-      background-color: var(--ddd-theme-default-coalyGray);
-      color: var(--ddd-theme-default-globalNeon);
-    }
-  </style>
-  <details id="follow-the-white-rabbit" open>
-    <div class="content">
-      <p>
-      
-        <strong>Check out project on github:</strong> <a href="https://github.com/elliebluejay/fox-api" target="_blank" rel="nofollow">elliebluejay/fox-api</a>
-        
-      </p>
-  
 </body>
 </html>

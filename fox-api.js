@@ -1,21 +1,27 @@
 /**
- * Copyright 2025 elliebluejay
+ * Copyright 2025 Bas6809
  * @license Apache-2.0, see LICENSE for full text.
  */
 import { LitElement, html, css } from "lit";
 import { DDDSuper } from "@haxtheweb/d-d-d/d-d-d.js";
 import { I18NMixin } from "@haxtheweb/i18n-manager/lib/I18NMixin.js";
 
-/**
- * `fox-api`
- * A gallery component that displays random fox images from randomfox.ca API
- * @demo index.html
- * @element fox-api
- */
 export class FoxApi extends DDDSuper(I18NMixin(LitElement)) {
 
   static get tag() {
     return "fox-api";
+  }
+
+  static get properties() {
+    return {
+      ...super.properties,
+      title: { type: String },
+      foxes: { type: Array },
+      loading: { type: Boolean },
+      imageCount: { type: Number },
+      modalFox: { type: Object },
+      modalOpen: { type: Boolean }
+    };
   }
 
   constructor() {
@@ -24,225 +30,188 @@ export class FoxApi extends DDDSuper(I18NMixin(LitElement)) {
     this.foxes = [];
     this.loading = false;
     this.imageCount = 9;
-    this.t = this.t || {};
+    this.modalFox = null;
+    this.modalOpen = false;
+
     this.t = {
-      ...this.t,
       title: "Fox Gallery",
       loadMore: "Load More Foxes",
-      loading: "Loading...",
+      loading: "Loading..."
     };
+
     this.registerLocalization({
       context: this,
       localesPath:
-        new URL("./locales/fox-api.ar.json", import.meta.url).href +
-        "/../",
-      locales: ["ar", "es", "hi", "zh"],
+        new URL("./locales/fox-api.ar.json", import.meta.url).href + "/../",
+      locales: ["ar", "es", "hi", "zh"]
     });
   }
 
-  // Lit reactive properties
-  static get properties() {
-    return {
-      ...super.properties,
-      title: { type: String },
-      foxes: { type: Array },
-      loading: { type: Boolean },
-      imageCount: { type: Number },
-    };
-  }
-
-  // Lit scoped styles
   static get styles() {
-    return [super.styles,
-    css`
+    return [super.styles, css`
       :host {
         display: block;
-        color: var(--ddd-theme-primary);
         background-color: var(--ddd-theme-accent);
         font-family: var(--ddd-font-navigation);
       }
-      .wrapper {
-        margin: var(--ddd-spacing-2);
-        padding: var(--ddd-spacing-4);
-      }
-      .header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: var(--ddd-spacing-4);
-      }
-      h2 {
-        margin: 0;
-        font-size: var(--ddd-font-size-xl);
-        color: var(--ddd-theme-default-potential0);
-      }
+
       .gallery {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
         gap: var(--ddd-spacing-4);
-        margin-bottom: var(--ddd-spacing-4);
       }
+
       .fox-card {
-        position: relative;
         border-radius: var(--ddd-radius-md);
         overflow: hidden;
-        background-color: var(--ddd-theme-default-white);
+        background: white;
         box-shadow: var(--ddd-boxShadow-sm);
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
-        cursor: pointer;
+        transition: transform 0.2s ease;
       }
+
       .fox-card:hover {
         transform: translateY(-4px);
-        box-shadow: var(--ddd-boxShadow-md);
-        border-color: var(--ddd-theme-default-potential50);
       }
-      .fox-image {
+
+      img {
         width: 100%;
         height: 250px;
         object-fit: cover;
-        display: block;
-      }
-      .fox-overlay {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
-        color: white;
-        padding: var(--ddd-spacing-3);
-        font-size: var(--ddd-font-size-xs);
-        opacity: 0;
-        transition: opacity 0.2s ease;
-      }
-      .fox-card:hover .fox-overlay {
-        opacity: 1;
-      }
-      .controls {
-        display: flex;
-        gap: var(--ddd-spacing-2);
-        justify-content: center;
-      }
-      button {
-        padding: var(--ddd-spacing-3) var(--ddd-spacing-6);
-        font-size: var(--ddd-font-size-s);
-        font-family: var(--ddd-font-navigation);
-        font-weight: var(--ddd-font-weight-bold);
-        background-color: var(--ddd-theme-default-potential50);
-        color: white;
-        border: none;
-        border-radius: var(--ddd-radius-sm);
         cursor: pointer;
-        transition: background-color 0.2s ease;
       }
-      button:hover:not(:disabled) {
-        background-color: var(--ddd-theme-default-potential70);
+
+      .actions {
+        display: flex;
+        justify-content: space-around;
+        padding: var(--ddd-spacing-2);
       }
-      button:disabled {
-        opacity: 0.6;
-        cursor: not-allowed;
+
+      button {
+        background: none;
+        border: none;
+        font-size: 1.2rem;
+        cursor: pointer;
       }
-      .loading-spinner {
+
+      .modal {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.8);
+        justify-content: center;
+        align-items: center;
+        z-index: 999;
+      }
+
+      .modal.open {
+        display: flex;
+      }
+
+      .modal img {
+        max-width: 90%;
+        max-height: 90%;
+        border-radius: var(--ddd-radius-md);
+      }
+
+      .controls {
         text-align: center;
-        padding: var(--ddd-spacing-4);
-        color: var(--ddd-theme-default-potential50);
+        margin-top: var(--ddd-spacing-4);
       }
     `];
   }
 
-  // Fetch a single fox image from the API
   async fetchFox() {
-    try {
-      const response = await fetch('https://randomfox.ca/floof/');
-      const data = await response.json();
-      return {
-        id: Date.now() + Math.random(),
-        image: data.image,
-        link: data.link,
-      };
-    } catch (error) {
-      console.error('Error fetching fox:', error);
-      return null;
-    }
+    const res = await fetch("https://randomfox.ca/floof/");
+    const data = await res.json();
+    return {
+      id: crypto.randomUUID(),
+      image: data.image,
+      link: data.link,
+      liked: false
+    };
   }
 
-  // Load multiple fox images
   async loadFoxes(count = 3) {
     this.loading = true;
-    const promises = [];
-    for (let i = 0; i < count; i++) {
-      promises.push(this.fetchFox());
-    }
-    const newFoxes = await Promise.all(promises);
-    this.foxes = [...this.foxes, ...newFoxes.filter(fox => fox !== null)];
+    const requests = Array.from({ length: count }, () => this.fetchFox());
+    const results = await Promise.all(requests);
+    this.foxes = [...this.foxes, ...results];
     this.loading = false;
   }
 
-  // Handle load more button click
-  handleLoadMore() {
-    this.loadFoxes(3);
-  }
-
-  // Handle fox card click - open external link
-  handleFoxClick(link) {
-    window.open(link, '_blank');
-  }
-
-  // Load initial foxes when component connects to DOM
   connectedCallback() {
     super.connectedCallback();
-    if (this.foxes.length === 0) {
+    if (!this.foxes.length) {
       this.loadFoxes(this.imageCount);
     }
   }
 
-  // Lit render the HTML
+  toggleLike(fox) {
+    fox.liked = !fox.liked;
+    this.requestUpdate();
+  }
+
+  openModal(fox) {
+    this.modalFox = fox;
+    this.modalOpen = true;
+  }
+
+  closeModal() {
+    this.modalOpen = false;
+    this.modalFox = null;
+  }
+
+  shareFox(fox) {
+    if (navigator.share) {
+      navigator.share({
+        title: "Cute Fox 🦊",
+        url: fox.link
+      });
+    } else {
+      navigator.clipboard.writeText(fox.link);
+      alert("Fox link copied!");
+    }
+  }
+
   render() {
     return html`
-      <div class="wrapper">
-        <div class="header">
-          <h2>${this.title}</h2>
-        </div>
-        
-        <div class="gallery">
-          ${this.foxes.map(fox => html`
-            <div class="fox-card" @click="${() => this.handleFoxClick(fox.link)}">
-              <img 
-                class="fox-image" 
-                src="${fox.image}" 
-                alt="Random fox" 
-                loading="lazy"
-              />
-              <div class="fox-overlay">
-                Click to view source
-              </div>
+      <h2>${this.title}</h2>
+
+      <div class="gallery">
+        ${this.foxes.map(fox => html`
+          <div class="fox-card">
+            <img
+              src="${fox.image}"
+              alt="Random fox"
+              @click="${() => this.openModal(fox)}"
+              loading="lazy"
+            />
+            <div class="actions">
+              <button @click="${() => this.toggleLike(fox)}">
+                ${fox.liked ? "❤️" : "🤍"}
+              </button>
+              <button @click="${() => this.shareFox(fox)}">🔗</button>
             </div>
-          `)}
-        </div>
-
-        ${this.loading ? html`
-          <div class="loading-spinner">
-            ${this.t.loading}
           </div>
-        ` : ''}
+        `)}
+      </div>
 
-        <div class="controls">
-          <button 
-            @click="${this.handleLoadMore}" 
-            ?disabled="${this.loading}"
-          >
-            ${this.t.loadMore}
-          </button>
-        </div>
+      <div class="controls">
+        <button ?disabled="${this.loading}" @click="${() => this.loadFoxes(3)}">
+          ${this.loading ? this.t.loading : this.t.loadMore}
+        </button>
+      </div>
+
+      <div class="modal ${this.modalOpen ? "open" : ""}" @click="${this.closeModal}">
+        ${this.modalFox ? html`
+          <img src="${this.modalFox.image}" @click="${e => e.stopPropagation()}" />
+        ` : ""}
       </div>
     `;
   }
 
-  /**
-   * haxProperties integration via file reference
-   */
   static get haxProperties() {
-    return new URL(`./lib/${this.tag}.haxProperties.json`, import.meta.url)
-      .href;
+    return new URL(`./lib/${this.tag}.haxProperties.json`, import.meta.url).href;
   }
 }
 
