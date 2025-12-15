@@ -38,7 +38,7 @@ export class FoxApi extends DDDSuper(I18NMixin(LitElement)) {
       loadMore: "Load More Foxes",
       loading: "Loading..."
     };
-
+      
     this.registerLocalization({
       context: this,
       localesPath:

@@ -17,7 +17,6 @@
       font-family: var(--ddd-font-navigation);
     }
 
-    /* ---------- Top Bar ---------- */
     .top-bar {
       position: sticky;
       top: 0;
@@ -47,7 +46,6 @@
       cursor: pointer;
     }
 
-    /* ---------- Main Layout ---------- */
     .layout {
       max-width: 1100px;
       margin: 24px auto;
@@ -57,7 +55,6 @@
       padding: 0 16px;
     }
 
-    /* ---------- Feed ---------- */
     .feed {
       display: flex;
       flex-direction: column;
@@ -70,7 +67,7 @@
       margin: 0;
     }
 
-    /* ---------- Sidebar ---------- */
+    
     .sidebar {
       position: sticky;
       top: 88px;
@@ -144,7 +141,35 @@
     }
   </style>
 </head>
+<script>
+  function forceBlackText(root = document.body) {
+    const elements = root.querySelectorAll("*");
 
+    elements.forEach(el => {
+      const style = window.getComputedStyle(el);
+
+      if (
+        style.color === "rgb(255, 255, 255)" ||
+        style.color === "rgba(255, 255, 255, 1)"
+      ) {
+        el.style.color = "#000";
+      }
+    });
+  }
+
+  window.addEventListener("load", () => {
+    forceBlackText();
+
+    const observer = new MutationObserver(() => {
+      forceBlackText();
+    });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true
+    });
+  });
+</script>
 <body>
 
   <!-- Top navigation -->
@@ -154,22 +179,20 @@
       <div class="top-actions">
         <span>🏠</span>
         <span>💬</span>
-        <span>➕</span>
+        <span>+</span>
         <span>❤️</span>
         <span>👤</span>
       </div>
     </div>
   </div>
 
-  <!-- Main content -->
   <div class="layout">
 
-    <!-- Feed -->
+
     <div class="feed">
       <fox-api></fox-api>
     </div>
 
-    <!-- Sidebar -->
     <aside class="sidebar">
       <div class="profile">
         <div class="profile-pic">🦊</div>
